@@ -17,7 +17,7 @@ class GraphRank::Keywords < GraphRank::TextRank
   # Clean text leaving just letters from a-z.
   def clean_text
     @text.downcase!
-    @text.gsub!(/[^a-z ]/, ' ')
+    @text.gsub!(/[^a-zа-я ]/, ' ')
     @text.gsub!(/\s+/, " ")
   end
 
@@ -26,9 +26,9 @@ class GraphRank::Keywords < GraphRank::TextRank
     @features.delete_if { |word| @stop_words.include?(word) }
   end
 
-  # Remove 1 and 2 char words.
+  # Remove 1 ... 3 char words.
   def remove_short_words
-    @features.delete_if { |word| word.length < 3 }
+    @features.delete_if { |word| word.length <= 3 }
   end
 
   # Build the co-occurence graph for an n-gram.
